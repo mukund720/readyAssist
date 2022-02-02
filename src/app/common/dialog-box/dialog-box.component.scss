@@ -1,0 +1,65 @@
+@import '../../../config.scss';
+
+.dialog {
+    position: fixed;
+    z-index: 9999;
+    padding-top: 180px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.dialog-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+    text-align: center;
+}
+
+.fa_success {
+    padding: 10px;
+    width: 50px;
+    height: 50px;
+    background: $button-primary;
+    color: #ffffff;
+    line-height: 1.5;
+    font-size: 20px;
+    border-radius: 50%;
+}
+
+.fa_failure {
+    padding: 10px;
+    width: 50px;
+    height: 50px;
+    background: $danger-color;
+    color: #ffffff;
+    line-height: 1.5;
+    font-size: 20px;
+    border-radius: 50%;
+}
+.fa_info {
+    padding: 10px;
+    width: 50px;
+    height: 50px;
+    background: $info-color;
+    color: #ffffff;
+    line-height: 1.5;
+    font-size: 20px;
+    border-radius: 50%;
+}
+.fa_warning {
+    padding: 10px;
+    width: 50px;
+    height: 50px;
+    background: $warning-color;
+    color: #ffffff;
+    line-height: 1.5;
+    font-size: 20px;
+    border-radius: 50%;
+}

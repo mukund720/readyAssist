@@ -1,0 +1,12 @@
+<div id="errorDialog" class="dialog">
+  <!-- dialog content -->
+  <div class="dialog-content animated fadeInUp">
+    <i class="fa fa-check fa_success" *ngIf="dialogData.type == 'Success'"></i>
+    <i class="fa fa-times fa_failure" *ngIf="dialogData.type == 'Failure'"></i>
+    <i class="fa fa-info fa_info" *ngIf="dialogData.type == 'Info'"></i>
+    <i class="fa fa-exclamation fa_warning" *ngIf="dialogData.type == 'Warning'"></i>
+
+    <p>{{dialogData.data}}</p>
+    <button class="button" (click)="hideDialog()">Close</button>
+  </div>
+</div>

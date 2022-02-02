@@ -1,0 +1,299 @@
+<app-auto-logout></app-auto-logout>
+
+<div class="dynamic_header">
+  <div class="page-header" id="header">
+    <h2 class="header-title" [ngStyle]="{'color':companyThemeBlockColor}">{{companyName}}</h2>
+    <span class="ask_query header-query" title="Ask Your Query" (click)="goTo()" [ngStyle]="{'background-color':companyThemeBlockColor,'color':CompanyThemetextColor}">
+      Ask Your Query
+    </span>
+
+    <i class="fa fa-search header-fasearch" *ngIf="!searchedItem"></i>
+    <i class="fa fa-times header-fasearch" *ngIf="searchedItem" (click)="clearAutocomplete()"></i>
+    <mat-form-field class="header-search">
+      <input type="text" placeholder="search.." aria-label="Number" matInput [(ngModel)]="searchedItem"
+        [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="getSearchedValue($event)">
+        <mat-option *ngFor="let value of arrayForSearch |search: searchedItem" [value]="value.menuName">
+          {{value.menuName}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+
+    <!-- <md2-autocomplete [items]="arrayForSearch" id="menuSearchBox" item-text="menuName" item-value="url"
+        [(ngModel)]="searchedItem" (change)="getSearchedValue()" placeholder="search.." class="header-search">
+    </md2-autocomplete> -->
+
+    <div class="hide-small">
+      <!-- <div class="header-actions email-block" md2-menu>
+            <span class="fa usermail" md2-menu-trigger style="width: 120px;" id="login_user"><span class="name">
+                    <p class="username">{{userName}}</p>
+                    <p class="usercode">{{userCode}}</p>
+                </span></span>
+            <div md2-menu-content x-position="before" style=" margin-right:  20px;margin-top: 64px;">
+                <a md2-menu-item (click)="switchCompany()" *ngIf="isMultiple">
+                    <i class="fa fa-object-ungroup menu-fa"></i>Switch Company
+                </a>
+                <a md2-menu-item (click)="navigateProfile()">
+                    <i class="fa fa-user menu-fa"></i>User Profile
+                </a>
+                <a md2-menu-item (click)="logout()">
+                    <i class="fa fa-sign-out menu-fa"></i>Logout
+                </a>
+            </div>
+        </div> -->
+
+      <div class="header-actions" md2-menu>
+        <!-- <i class="fa fa-search header-fa  searchicon" *ngIf="!isSearch" (click)="showSearchBox();"></i> -->
+        <i class="fa fa-bell header-fa" id="noti_list" style="border-right: 1px solid #ececec;" mat-icon-button
+          [matMenuTriggerFor]="notificationMenu">
+          <span class="notification-span" *ngIf="unreadNotifications.length > 0">
+            {{unreadNotifications.length}}
+          </span>
+        </i>
+        <i class="fa fa fa-tasks header-fa" style="border-right: 1px solid #ececec;" (click)="startProcess(true)"></i>
+        <mat-menu #appMenu="matMenu">
+          <a mat-menu-item (click)="switchCompany()" *ngIf="isMultiple">
+            <i class="fa fa-object-ungroup menu-fa"></i>Switch Company
+          </a>
+          <a mat-menu-item (click)="navigateProfile()">
+            <i class="fa fa-user menu-fa"></i>User Profile
+          </a>
+          <a md2-menu-item (click)="navigatePasswordReset()">
+            <i class="fa fa-key menu-fa"></i>Reset Password
+        </a>
+          <a mat-menu-item (click)="logout()">
+            <i class="fa fa-sign-out menu-fa"></i>Logout
+          </a>
+        </mat-menu>
+
+        <mat-menu #notificationMenu="matMenu" class="notification-menu-div">
+          <!-- <div class="notification-menu-div"> -->
+          <p *ngIf="notificationList.length == 0" style="text-align: center;font-size: 12px;">
+            No Notifications found</p>
+          <ul class="notification-list" *ngIf="notificationList.length!=undefined&&notificationList.length>0">
+            <li class="notification-list-item" md2-menu-item *ngFor="let d of notificationList"
+              (click)="markRead(d.id);"
+              [ngStyle]="{'background-color': d.read_indicator == '1' ? '#2a52681f' : '#ffffff'}">
+              <ul class="sub-notification-list">
+                <li class="sub-notification-list-item sub-notification-list-item-title">
+                  <p style="margin: 0px"><b>{{d.title}}</b></p>
+                  <!-- <i class="fa fa-times-circle notification-remove" (click)="showNotification(d.id)"></i> -->
+                </li>
+                <li class="sub-notification-list-item sub-notification-list-item-message">
+                  <p>{{d.message}}</p>
+                  <p> <span class="time_since"
+                      *ngIf="d.date_added!=null&&d.date_added!=undefined">{{d.date_added}}</span>
+                      <span *ngIf="d.target!='' && d.target!=undefined" class="download_span">
+                        <i class="fa fa-cloud-download download_target" title="Download" (click)="downloadData(d)"></i>
+
+                    </span>
+                  </p>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <div class="notification-menu-footer">
+            <a class="seeMore" *ngIf="notificationList.length>0" (click)="seeMore();">
+              <span>See All</span></a>
+          </div>
+          <!-- </div> -->
+        </mat-menu>
+
+        <div class="usermail">
+          <button mat-icon-button [matMenuTriggerFor]="appMenu" class="user_button">
+            <p class="username ">{{userName}}</p>
+            <p class="usercode">{{userCode}}</p>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="menu-div show-small" md2-menu>
+      <span class="notification-span-new" *ngIf="unreadNotifications.length > 0" md2-menu-trigger>
+        {{unreadNotifications.length}}
+      </span>
+      <i class="fa fa-question-circle-o header-forquery" title="Ask Your Query" (click)="goTo()"></i>
+      <i class="fa fa-search" (click)="showSearch()"></i>
+      <i class="fa fa-bell"></i>
+      <i class="fa fa-bars" *ngIf="!isMenuIconOpened" (click)="openMenuNav()"></i>
+      <i class="fa fa-times" *ngIf="isMenuIconOpened" (click)="closeMenuNav()"></i>
+
+      <!-- <div md2-menu-content x-position="before" class="notification-menu-div">
+            <p *ngIf="notificationList.length == 0" style="text-align: center;font-size: 12px;">
+                No Notifications found</p>
+            <ul class="notification-list" *ngIf="notificationList.length!=undefined&&notificationList.length>0">
+                <li class="notification-list-item" md2-menu-item *ngFor="let d of notificationList"
+                    (click)="markRead(d.id);"
+                    [ngStyle]="{'background-color': d.read_indicator == '1' ? '#2a52681f' : '#ffffff'}">
+                    <ul class="sub-notification-list">
+                        <li class="sub-notification-list-item sub-notification-list-item-title">
+                            <p><b>{{d.title}}</b></p>
+                            <i class="fa fa-times-circle notification-remove" (click)="showNotification(d.id)"></i>
+                        </li>
+                        <li class="sub-notification-list-item sub-notification-list-item-message">
+                            <p>{{d.message}}</p>
+                            <p> <span class="time_since"
+                                    *ngIf="d.date_added!=null&&d.date_added!=undefined">{{d.date_added | timeAgo}}</span>
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="notification-menu-footer">
+                <a class="seeMore" *ngIf="notificationList.length>0" (click)="seeMore('/all-notification');">
+                    <span>See All</span></a>
+            </div>
+        </div> -->
+    </div>
+  </div>
+
+  <nav class="main-menu" id="mySidenav" (mouseover)="openNav()" (mouseleave)="closeNav()">
+    <div class="toolbar-logo">
+      <li (click)="goHome();">
+        <img (click)="goHome();" src="{{companyLogo}}" class="big-logo_custom" *ngIf="isclosed && companyLogo !=''">
+        <img (click)="goHome();" class="animated fadeInUp" src="{{companyLogo}}" class="readyassistLogo"
+          *ngIf="!isclosed && companyLogo !=''" />
+        <img src="./assets/images/white-logo.png" class="big-logo" *ngIf="isclosed && companyLogo ==''">
+        <img class="animated fadeInUp" src="./assets/images/white-logo.png" class="readyassistLogo"  *ngIf="!isclosed && companyLogo ==''" />
+        <span class="nav-text">
+        </span>
+      </li>
+    </div>
+    <ul class="menu-ul">
+      <li *ngFor="let m of menuList;let i = index" (click)="navigate(m.aurl,m.menuitemname,true,m.project)"
+        [ngStyle]="{'background-color': m.activemenu ? 'rgba(85, 127, 150, 0.38)' : 'transparent' }">
+        <a (click)="showMenuList(i)"  [ngStyle]="{'background-color':companyThemeBlockColor,'color':CompanyThemetextColor}">
+          <img src="./assets/Icon/PNG/{{m.menuitemicon}}" class="menu-img" [ngStyle]="{'background-color':CheckthemeImage}"/>
+          <span class="nav-text">
+            {{m.menuitemname}}
+          </span>
+          <i class="fa {{m.show ? 'fa-angle-down' : 'fa-angle-right'}} arrow-icon" *ngIf="m.submenu"></i>
+        </a>
+        <ul class="sublist-ul {{m.show ? 'active' : ''}}" *ngIf="m.show">
+          <li *ngFor="let x of m.submenu" (click)="navigate(x.aurl,m.menuitemname,false,x.project)"
+            [ngStyle]="{'background-color': x.activemenu ? '#557f96a6' : 'transparent' }">
+            <a [ngStyle]="{'color':CompanyThemetextColor}">
+              <span class="nav-text">
+                {{x.menuitemname}}
+              </span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+    </ul>
+
+  </nav>
+
+  <div id="notificationModal" class="notification-modal">
+    <div class="notification-modal-content">
+      <p>Are you sure you want to delete the Notification?</p>
+      <div>
+        <button class="button-border popup-button" (click)="hideNotification()">No</button>
+        <button class="button popup-button" (click)="deleteNotifiction()">Yes</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="searchModal" class="search-modal">
+    <div class="search-modal-content">
+      <i class="fa fa-times modal-fa" (click)="hideSearch()"></i>
+      <!-- <md2-autocomplete [items]="arrayForSearch" item-text="menuName" item-value="url" [(ngModel)]="searchedItem"
+            (change)="getSearchedValue()" placeholder="What you are looking for...?" id="searchId">
+        </md2-autocomplete> -->
+
+    </div>
+  </div>
+
+
+  <!-- <div class="back-to-top" ><i class="fa fa-angle-up"  (click)="gotoUp();" title="Up"></i>
+    <i class="fa fa-angle-down"  (click)="gotoDown();" title="Bottom"></i>
+  </div> -->
+
+  <div id="menuNav" class="menunav">
+    <p (click)="logout()">Logout</p>
+    <p *ngIf="isMultiple" (click)="switchCompany()">Switch Company</p>
+  </div>
+
+  <div class="modal-box" id="showProgressModel">
+  </div>
+  <div id="progressSidenav" class="sidenav_progress">
+    <div class="progress_head">
+      <p style="margin: 3px;">Background Process<i class="fa fa-times progress_i" (click)="startProcess(false)"></i></p>
+    </div>
+    <div *ngFor="let x of loadResponse" style="margin-top: 50px;padding-left: 10px;">
+      <h3 style="margin-left: 15px;">{{x.process_name}}</h3>
+      <div class="progress_outer_new" *ngFor="let y of x.response">
+        <div class="progress-bar-container">
+          <i class="fa fa-times-circle remove_process" (click)="removeProcess(y);"></i>
+
+          <div class="progress-bar stripes animated reverse slower" *ngIf="y.total_records !== y.completed"
+            [style.width]="y.pendingPercent">
+          </div>
+          <p class="progress_p">{{y.process_name}} : {{y.completed}} / {{y.total_records}}
+          </p>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal-boxLogout" id="showIssueModelUserSession">
+</div>
+<div id="IssueSidenavUserSession" [ngClass]="detectMob()">
+  <svg *ngIf="is_active" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#53a75c" fill-opacity="1" d="M0,288L14.1,277.3C28.2,267,56,245,85,234.7C112.9,224,141,224,169,197.3C197.6,171,226,117,254,90.7C282.4,64,311,64,339,74.7C367.1,85,395,107,424,112C451.8,117,480,107,508,112C536.5,117,565,139,593,133.3C621.2,128,649,96,678,80C705.9,64,734,64,762,64C790.6,64,819,64,847,53.3C875.3,43,904,21,932,21.3C960,21,988,43,1016,85.3C1044.7,128,1073,192,1101,229.3C1129.4,267,1158,277,1186,266.7C1214.1,256,1242,224,1271,197.3C1298.8,171,1327,149,1355,160C1383.5,171,1412,213,1426,234.7L1440,256L1440,0L1425.9,0C1411.8,0,1384,0,1355,0C1327.1,0,1299,0,1271,0C1242.4,0,1214,0,1186,0C1157.6,0,1129,0,1101,0C1072.9,0,1045,0,1016,0C988.2,0,960,0,932,0C903.5,0,875,0,847,0C818.8,0,791,0,762,0C734.1,0,706,0,678,0C649.4,0,621,0,593,0C564.7,0,536,0,508,0C480,0,452,0,424,0C395.3,0,367,0,339,0C310.6,0,282,0,254,0C225.9,0,198,0,169,0C141.2,0,113,0,85,0C56.5,0,28,0,14,0L0,0Z"></path></svg>
+  <div *ngIf="is_active">
+  <div  style="padding-left: 10px;max-height: 80%;">
+
+      <div class="col-sm-12" style="padding-bottom: 40px;">
+        <div class="col-sm-12">
+          <div class="col-sm-6">
+            <b><i class="fa fa-exclamation-triangle" style="font-size: 80px;color:red" aria-hidden="true"></i>
+            </b>
+          </div>
+          <div class="col-sm-6">
+            <p class="txtGrad">
+              {{already_active_msg}}
+            </p>
+          </div>
+        </div>
+      </div>
+
+  </div>
+  <div class="col-sm-12" style="bottom: 0px;
+  position: absolute;
+  /* background: #38733e; */
+  padding-bottom: 10px;
+  padding-top: 10px;z-index: 9;">
+    <div class="action-div right-align">
+      <button class="button-border" style="padding:5px;min-width: 110px;
+      height: 40px;
+      margin: 0px 8px;
+      max-height: 38px;
+      font-size: 13px;display: none;" (click)="showLogoutIssue(false);"
+      [disabled]="buttonProgressing">Cancel</button>
+
+      <button class="button" (click)="ConfirmLogout()"
+        [disabled]="buttonProgressing"style="padding:5px;min-width: 80px;
+        height: 30px;
+        margin: 0px 8px;
+        max-height: 38px;
+        font-size: 13px;" >
+        <span *ngIf="!buttonProgressing" >Ok</span>
+        <i class="fa fa-spinner fa-spin" *ngIf="buttonProgressing"
+          style="font-size:  18px;"></i>
+      </button>
+    </div>
+  </div>
+  </div>
+  <svg *ngIf="is_active" class="bottomSVG" style="margin-top:5px;
+  position: relative;
+  z-index: 1;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#273036" fill-opacity="1" d="M0,32L120,48C240,64,480,96,720,106.7C960,117,1200,107,1320,101.3L1440,96L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path></svg>
+
+</div>

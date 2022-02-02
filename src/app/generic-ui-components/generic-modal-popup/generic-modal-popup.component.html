@@ -1,0 +1,57 @@
+<div id="showModel" class="modal-box" (keypress)="closeDiv($event)" style="display:block" *ngIf="modalDetails.is_view">
+</div>
+<app-loader *ngIf="commonVariableList.isProgressing"></app-loader>
+<div (keypress)="closeDiv($event)" class="modal-content" id="{{modalDetails.id}}" style="width: auto;"
+  *ngIf="modalDetails.is_view&&!commonVariableList.isProgressing">
+  <p class="heading-p"> {{modalDetails.name}} </p>
+  <!-- {{dataList|json}} -->
+  <div  *ngIf="!commonVariableList.is_history">
+  <mat-card class="mat-elevation-z8 col-sm-12">
+    <!-- show data before item-->
+    <app-generic-beforediv-list [divDetails]="commonVariableList.beforeDivDetails"></app-generic-beforediv-list>
+
+    <!-- show product details-->
+    <app-generic-table [tableDetails]="commonVariableList.tableDetails"></app-generic-table>
+
+    <!-- show data after item table-->
+    <app-generic-afterdiv-list [divDetails]="commonVariableList.afterDivDetails"></app-generic-afterdiv-list>
+
+    <!-- show approvals-->
+    <app-generic-approvals [approvalDetails]="commonVariableList.approvalDetails"></app-generic-approvals>
+
+    <!-- show attachment -->
+    <app-generic-attachment [attachment]="commonVariableList.attachments"></app-generic-attachment>
+    <!-- <app-generic-grand-table [tableDetails]="commonVariableList.tableDetails"></app-generic-grand-table> -->
+
+  </mat-card>
+</div>
+<!-- showo accroding to history-->
+<div  *ngIf="commonVariableList.is_history">
+  <mat-card class="mat-elevation-z8 col-sm-12" *ngFor="let i of commonVariableList.historyList;let index1=index">
+    <p class="heading-p"> {{modalDetails.name}} {{index1+1}}</p>
+
+    <!-- show data before item-->
+    <app-generic-beforediv-list [divDetails]="i.beforeDivDetails"></app-generic-beforediv-list>
+
+    <!-- show product details-->
+    <app-generic-table [tableDetails]="i.tableDetails"></app-generic-table>
+
+    <!-- show data after item table-->
+    <app-generic-afterdiv-list [divDetails]="i.afterDivDetails"></app-generic-afterdiv-list>
+
+    <!-- show approvals-->
+    <app-generic-approvals [approvalDetails]="i.approvalDetails"></app-generic-approvals>
+
+    <!-- show attachment -->
+    <app-generic-attachment [attachment]="i.attachments"></app-generic-attachment>
+    <!-- <app-generic-grand-table [tableDetails]="i.tableDetails"></app-generic-grand-table> -->
+
+  </mat-card>
+</div>
+  <footer>
+    <button class="button-border" style="float: right;" (click)="hideModal();">Cancel</button>
+  </footer>
+</div>
+<app-no-records *ngIf="!commonVariableList.dataList && !commonVariableList.isProgressing">
+</app-no-records>
+

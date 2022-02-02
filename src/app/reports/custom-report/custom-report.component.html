@@ -1,0 +1,204 @@
+<main class="main-container">
+  <section class="demoPage">
+    <div class="side-menu-wrap side-menu-wrap-demo">
+      <div class="side-menu" *ngIf="is_side_menu">
+        <div class="side-menu-border"></div>
+        <div *ngFor="let i of sideMenu.list;let mainIndex=index">
+          <div [ngClass]="i.class">{{i.name}}</div>
+          <ol *ngIf="i.list">
+            <li *ngFor="let j of i.list;let subindex=index" (click)="setActive(mainIndex,subindex)"><a [ngClass]="j.class">{{j.name}}</a></li>
+            </ol>
+        </div>
+
+      </div>
+      <div class="container">
+        <!-- <div class="demo-title-wrap">
+          <h1 class="title-main">
+            {{activeSideMenu.parent.description}}
+          </h1>
+        </div> -->
+      <div class="flexible-subcontainer">
+      <!-- <div class="format-rules description-blocks first-description-block">
+        <p>
+          {{activeSideMenu.child.description}}
+        </p>
+      </div> -->
+      <mat-card class="mat-elevation-z8" *ngIf="activeChildMenu.key!=''||activeParentMenu.key!=''" style="padding-bottom: 0px;">
+        <div *ngIf="activeChildMenu.key=='my_sql_query'">
+          <div class="fl-container" >
+            <div class="col-sm-12">
+              <div class="col-sm-3">
+                <mat-form-field class="full-width" style="top: -11px;">
+                  <mat-label>Select From Table</mat-label>
+                  <mat-select [(ngModel)]="activeChildMenu.table" (ngModelChange)="setColumns(activeChildMenu.table);" [disabled]="api_progressing.is_table_api" id="searchTable">
+                    <mat-option>
+                      <ngx-mat-select-search placeholder="Search" [(ngModel)]="activeChildMenu.searchProject">
+                      </ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option>Clear Filter</mat-option>
+                    <mat-option *ngFor="let i of activeChildMenu.tableList|search: activeChildMenu.searchTable"
+                    [value]="i.item_id">{{i.item_text}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <app-api-progressing *ngIf="api_progressing.is_table_api"></app-api-progressing>
+              </div>
+              <div class="col-sm-3">
+                <mat-form-field class="full-width" style="top: -11px;">
+                  <mat-label>Select Columns</mat-label>
+                  <mat-select [(ngModel)]="activeChildMenu.columnList" (ngModelChange)="makeQuery()" multiple="true" [disabled]="api_progressing.is_column_api" id="searchColumn">
+                    <mat-option>
+                      <ngx-mat-select-search placeholder="Search" [(ngModel)]="activeChildMenu.searchColumns">
+                      </ngx-mat-select-search>
+                    </mat-option>
+                    <!-- <mat-option>Clear Filter</mat-option> -->
+                    <mat-option  *ngFor="let i of activeChildMenu.columnRecordList|search: activeChildMenu.searchColumns"
+                    [value]="i.item_id">{{i.item_text}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <app-api-progressing *ngIf="api_progressing.is_column_api"></app-api-progressing>
+              </div>
+              <div class="col-sm-3">
+                <mat-radio-group
+                aria-labelledby="example-radio-group-label"
+                class="example-radio-group" style="display: block;top: -42px;
+                position: relative;"
+                [(ngModel)]="activeChildMenu.order_by" (change)="makeQuery();">
+                <mat-radio-button class="example-radio-button" value="asc">
+                  Ascending Order
+                </mat-radio-button>
+                <mat-radio-button class="example-radio-button" value="dsc">
+                  Descending Order
+                </mat-radio-button>
+              </mat-radio-group>
+              </div>
+              <div class="col-sm-3">
+                <mat-form-field class="full-width" style="top: -11px;">
+                  <mat-label>Order By Column</mat-label>
+                  <mat-select [(ngModel)]="activeChildMenu.order_by_column" [disabled]="activeChildMenu.order_by==''" multiple="true" (ngModelChange)="makeQuery()" [disabled]="api_progressing.is_column_api" id="orderColumn">
+                    <mat-option>
+                      <ngx-mat-select-search placeholder="Search" [(ngModel)]="activeChildMenu.searchOrderColumns">
+                      </ngx-mat-select-search>
+                    </mat-option>
+                    <!-- <mat-option>Clear Filter</mat-option> -->
+                    <mat-option  *ngFor="let i of activeChildMenu.columnList|search: activeChildMenu.searchOrderColumns"
+                    [value]="i">{{i}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+</div>
+</div>
+<div class="fl-container">
+            <div class="col-sm-12">
+
+                <div class="col-sm-8">
+                  <!-- <mat-form-field appearance="fill"> -->
+                    <mat-label style="text-align: center;">SQL Query: </mat-label>
+                    <code>
+                      <mat-icon class="blink_me">last_page</mat-icon>
+                      {{activeChildMenu.query}}
+                    </code>
+                    <!-- <textarea matInput disabled [id]="activeChildMenu.key" [(ngModel)]="activeChildMenu.query"></textarea> -->
+                  <!-- </mat-form-field> -->
+                  </div>
+                  <div class="col-sm-4">
+                    <button class="button gobtn1" style="margin-top: 20px;" (click)="SQLQuery();" [disabled]="isProgressing||buttonProgressing">
+                      <i class="fa fa fa-sign-out" *ngIf="!buttonProgressing" style="font-size:  15px;"></i>
+                      <i class="fa fa-spinner fa-spin" *ngIf="buttonProgressing" style="font-size:  105x;"></i>
+
+                    </button>
+
+                  </div>
+                  </div>
+                  </div>
+                  </div>
+                  </mat-card>
+      <div class="pivot-container-wrap">
+        <div id="pivot-container" style="width: 100%; height: 100%; position: relative;">
+          <div id="fm-toolbar-wrapper" class="fm-toolbar-ui fm-layout-700" *ngIf="is_tool_bar" style="width: 100%;background: #efefef;">
+            <div class="fm-left-scroll-button" *ngIf="toolBarList.length>11"></div>
+            <div class="fm-list-wrapper fm-one-arrow-scroll">
+              <button *ngFor="let i of toolBarList;let mainIndex=index" [hidden]="!i.is_visible" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <div class="col-sm-2 table-margin table-fa">
+                  <div class="tooltip hide-small" (click)="checkParentMenu(i,mainIndex)">
+                    <mat-icon [ngClass]="i.class">{{i.icon}}</mat-icon>
+                    <mat-label class="menuName">{{i.name}}</mat-label>
+
+                    <span class="tooltiptext">{{i.description}}</span>
+                  </div>
+                  </div>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item *ngFor="let j of i.list;let subIndex=index" (click)="checkChildMenu(j,i,subIndex,mainIndex)" [title]="i.description" [hidden]="!j.is_visible">
+                      <mat-icon>{{j.icon}}</mat-icon>
+                      <span>{{j.name}}</span>
+                    </button>
+                  </mat-menu>
+              </button>
+
+            </div>
+            <div class="fm-right-scroll-button fm-scroll-arrow" *ngIf="toolBarList.length>11"></div>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+<div class="modal-boxLogout" id="showIssueModelCustomPopup">
+</div>
+<div id="IssueSidenavCustomPopup" [ngClass]="detectMob()">
+  <svg *ngIf="is_active" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#53a75c" fill-opacity="1" d="M0,288L14.1,277.3C28.2,267,56,245,85,234.7C112.9,224,141,224,169,197.3C197.6,171,226,117,254,90.7C282.4,64,311,64,339,74.7C367.1,85,395,107,424,112C451.8,117,480,107,508,112C536.5,117,565,139,593,133.3C621.2,128,649,96,678,80C705.9,64,734,64,762,64C790.6,64,819,64,847,53.3C875.3,43,904,21,932,21.3C960,21,988,43,1016,85.3C1044.7,128,1073,192,1101,229.3C1129.4,267,1158,277,1186,266.7C1214.1,256,1242,224,1271,197.3C1298.8,171,1327,149,1355,160C1383.5,171,1412,213,1426,234.7L1440,256L1440,0L1425.9,0C1411.8,0,1384,0,1355,0C1327.1,0,1299,0,1271,0C1242.4,0,1214,0,1186,0C1157.6,0,1129,0,1101,0C1072.9,0,1045,0,1016,0C988.2,0,960,0,932,0C903.5,0,875,0,847,0C818.8,0,791,0,762,0C734.1,0,706,0,678,0C649.4,0,621,0,593,0C564.7,0,536,0,508,0C480,0,452,0,424,0C395.3,0,367,0,339,0C310.6,0,282,0,254,0C225.9,0,198,0,169,0C141.2,0,113,0,85,0C56.5,0,28,0,14,0L0,0Z"></path></svg>
+  <div *ngIf="is_active">
+  <div  style="padding-left: 10px;max-height: 80%;">
+
+      <div class="col-sm-12" style="padding-bottom: 40px;">
+        <div class="col-sm-12">
+          <div class="col-sm-6">
+            <b><i class="fa fa-exclamation-triangle" style="font-size: 80px;color:red" aria-hidden="true"></i>
+            </b>
+          </div>
+          <div class="col-sm-6">
+            <p class="txtGrad">
+              {{already_active_msg}}
+            </p>
+          </div>
+        </div>
+      </div>
+
+  </div>
+  <div class="col-sm-12" style="bottom: 0px;
+  position: absolute;
+  /* background: #38733e; */
+  padding-bottom: 10px;
+  padding-top: 10px;z-index: 9;">
+    <div class="action-div right-align">
+      <button class="button-border" style="padding:5px;min-width: 110px;
+      height: 40px;
+      margin: 0px 8px;
+      max-height: 38px;
+      font-size: 13px;display: none;" (click)="showLogoutIssue(false);"
+      [disabled]="buttonProgressing">Cancel</button>
+
+      <button class="button" (click)="ConfirmLogout()"
+        [disabled]="buttonProgressing"style="padding:5px;min-width: 80px;
+        height: 30px;
+        margin: 0px 8px;
+        max-height: 38px;
+        font-size: 13px;" >
+        <span *ngIf="!buttonProgressing" >Ok</span>
+        <i class="fa fa-spinner fa-spin" *ngIf="buttonProgressing"
+          style="font-size:  18px;"></i>
+      </button>
+    </div>
+  </div>
+  </div>
+  <svg *ngIf="is_active" class="bottomSVG" style="margin-top:5px;
+  position: relative;
+  z-index: 1;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#273036" fill-opacity="1" d="M0,32L120,48C240,64,480,96,720,106.7C960,117,1200,107,1320,101.3L1440,96L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path></svg>
+
+</div>

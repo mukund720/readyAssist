@@ -1,0 +1,15 @@
+<div class="col-sm-12" style="margin-top:20px; " *ngIf="attachment.length!=undefined&&attachment.length>0">
+  <p *ngIf="attachment.length!=undefined&&attachment.length>0" style="margin-left: 10px;"><b>Attachments</b></p>
+  <div class="col-sm-10" style="padding:0px;">
+    <div class="upload-div" *ngFor="let x of attachment" >
+      <a href="{{x.display}}" style="display: block;" target="_blank">
+        <!-- <i class="fa fa-file-o"></i> -->
+        <i class="{{x.iconclass}}"></i>
+        <p class="uplodedfilename">{{x.filename}}</p>
+        <p matTooltip="View/Download :- {{x.filename}}"  class="download">
+            <i class="fa fa-cloud-download"></i>
+        </p>
+      </a>
+    </div>
+  </div>
+</div>

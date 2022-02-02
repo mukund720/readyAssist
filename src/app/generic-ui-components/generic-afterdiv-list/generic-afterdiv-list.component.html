@@ -1,0 +1,26 @@
+ <!-- show div data after item-->
+ <div class="col-sm-12" style="padding-bottom: 10px;"
+   *ngIf="commonVariableList.divList.length!=undefined&&commonVariableList.divList.length>0">
+   <div *ngFor="let row of commonVariableList.divList;let i=index" class="{{row.div_size}}" [hidden]="!row.is_view"
+     style="padding:20px; ">
+     <div *ngIf="!row.is_array">
+       <p *ngIf="row.input_type=='text'" class="p-title span_label" style="font-size: 12px;"
+        [style.color]="company_setup.generice_ui_heading_color_code">
+
+         {{row.display}}
+
+       </p>
+       <div *ngIf="row.input_type=='text'" style="font-size: 11px;" class="span_ansr" [style.color]="company_setup.generice_ui_paragraph_color_code">
+         {{row.value}}
+       </div>
+       <div *ngIf="row.input_type=='checkbox'">
+         <div class="pure-checkbox">
+           <input id="row.display{{i}}" [disabled]="row.is_disabled" type="checkbox" [(ngModel)]="row.value">
+           <label for="row.display{{i}}" class="span_ansr" [style.color]="company_setup.generice_ui_paragraph_color_code">{{row.display}}</label>
+         </div>
+       </div>
+     </div>
+     <div *ngIf="row.is_array">
+     </div>
+   </div>
+ </div>
