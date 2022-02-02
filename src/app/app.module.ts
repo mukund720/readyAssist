@@ -35,7 +35,6 @@ import { WebService } from './shared/services/web.service';
 import { CommonFunctionModule } from './common/commonFunction.module';
 import { SharedPipesModule } from './pipes/shared-pipes.module';
 import { SharedServicesModule } from './shared/shared-services.module';
-import { ToasterModule } from 'angular2-toaster';
 import {MatToolbarModule} from '@angular/material/toolbar'; 
 
 @NgModule({
@@ -49,7 +48,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ToasterModule.forRoot(),
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut: 1000,
