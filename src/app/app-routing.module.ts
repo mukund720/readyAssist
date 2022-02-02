@@ -8,6 +8,10 @@ const routes: Routes = [
   path: '',
   loadChildren: () => import('./reports/custom-report/custom-report.module').then(m => m.CustomReportModule)
 },
+{
+  path: 'order-booking',
+  loadChildren: () => import('./map/order-booking/order-booking.module').then(m => m.OrderBookingModule)
+},
 ];
 @NgModule({
   imports: [

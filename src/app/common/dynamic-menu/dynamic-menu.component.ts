@@ -75,8 +75,8 @@ export class DynamicMenuComponent implements OnInit {
     this.userCode = 'ABC'
 
     this.companyName ="Ready Assist"
-      this.menuList = {
-        response: [
+      this.menuList = 
+      [
           {
             id: '1',
             parent: '0',
@@ -130,7 +130,6 @@ export class DynamicMenuComponent implements OnInit {
             ]
           }
         ]
-      };
     
     this.companyThemeBlockColor =  "#035168";
     this.CompanyThemetextColor =  "#FFFFFF";

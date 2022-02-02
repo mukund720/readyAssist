@@ -39,6 +39,7 @@ import { CommonFunctionModule } from './common/commonFunction.module';
 import { SharedPipesModule } from './pipes/shared-pipes.module';
 import { SharedServicesModule } from './shared/shared-services.module';
 import { ToasterModule } from 'angular2-toaster';
+import {MatToolbarModule} from '@angular/material/toolbar'; 
 
 @NgModule({
   declarations: [AppComponent],
@@ -77,6 +78,7 @@ import { ToasterModule } from 'angular2-toaster';
     MatSortModule,
     MatTooltipModule,
     MatProgressSpinnerModule,
+    MatToolbarModule,
     NgxMatDrpModule
   ],
   providers: [WebService],

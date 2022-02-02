@@ -959,6 +959,10 @@ nav.main-menu li.active>a,
 .dynamic_header .menu-ul .fa {
     font-size: 18px;
 }
+.menu-ul
+{
+    display: inline-flex;
+}
 
 .sublist-ul {
     padding-left: 0px !important;

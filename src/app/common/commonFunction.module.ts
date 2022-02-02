@@ -16,6 +16,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
 import { ModalComponent } from './modal/modal.component';
 import { ApiProgressingComponent } from './api-progressing/api-progressing.component';
+import {MatToolbarModule} from '@angular/material/toolbar'; 
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { ApiProgressingComponent } from './api-progressing/api-progressing.compo
     MatAutocompleteModule,
     SharedPipesModule,
     MatIconModule,
+    MatToolbarModule
     ],
   exports: [
     LoaderComponent,
