@@ -1,3 +1,13 @@
+<div class="container">
+  <div class="flexible-subcontainer">
+  <mat-card class="mat-elevation-z8"style="padding-bottom: 0px;">
+   
+<div class="col-sm-12">
+  <div class="mainDiv"></div>
+</div>
+</mat-card>
+</div>
+</div>
 <main class="main-container">
   <section class="demoPage">
     <div class="side-menu-wrap side-menu-wrap-demo">
@@ -12,17 +22,7 @@
 
       </div>
       <div class="container">
-        <!-- <div class="demo-title-wrap">
-          <h1 class="title-main">
-            {{activeSideMenu.parent.description}}
-          </h1>
-        </div> -->
       <div class="flexible-subcontainer">
-      <!-- <div class="format-rules description-blocks first-description-block">
-        <p>
-          {{activeSideMenu.child.description}}
-        </p>
-      </div> -->
       <mat-card class="mat-elevation-z8" *ngIf="activeChildMenu.key!=''||activeParentMenu.key!=''" style="padding-bottom: 0px;">
         <div *ngIf="activeChildMenu.key=='my_sql_query'">
           <div class="fl-container" >
