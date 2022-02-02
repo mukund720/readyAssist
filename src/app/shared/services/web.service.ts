@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from "@angular/router";
 import { DeviceDetectorService } from 'ngx-device-detector';
-
-
 @Injectable()
 export class WebService {
 

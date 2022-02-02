@@ -148,8 +148,16 @@ export class DynamicMenuComponent implements OnInit {
     } else {
     }
   }
-
-
+  getSearchedValue(event) {
+      this.webService.redirectURL(this.searchedItem);
+  }
+  showMenuList(index) {
+    this.menuList[index].show = !this.menuList[index].show;
+  }
+  clearAutocomplete()
+  {
+    this.searchedItem=''
+  }
 
 
   navigate(url: any,) {

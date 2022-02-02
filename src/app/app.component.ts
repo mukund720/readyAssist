@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [WebService]
 })
 export class AppComponent {
   public toastConfig: ToasterConfig = new ToasterConfig({
@@ -19,7 +18,6 @@ export class AppComponent {
   notificationLength: any = 0;
   constructor(
   private router: Router,
-  public webService: WebService,
   private toasterService: ToasterService,
   ) {
 

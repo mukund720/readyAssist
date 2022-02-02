@@ -7,6 +7,6 @@ import { AuthService } from './auth/auth.service';
   declarations: [],
   imports: [CommonModule],
   exports: [],
-  providers: [AuthService, ExcelService, WebService]
+  providers: [AuthService, WebService]
 })
 export class SharedServicesModule {}

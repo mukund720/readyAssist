@@ -76,7 +76,7 @@ export class GenericModalPopupComponent implements OnInit {
     document.getElementById('body').style.overflow = 'auto';
   }
   showInvoice(d) {
-          this.makeFinalData(response);
+          this.makeFinalData({});
       
   }
  

@@ -7,6 +7,6 @@ export class AuthService implements CanLoad {
   ) {}
   urlList: any = [];
   canLoad(route: Route): boolean {
-  
+  return true;
   }
 }

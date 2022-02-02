@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { Validators, FormBuilder } from "@angular/forms";
-import { LocalStorageService } from '../../shared/services/storage/local-storage.service';
 import { ToastrService } from 'ngx-toastr';
 import { WebService } from 'src/app/shared/services/web.service';
 import html2canvas from 'html2canvas';
@@ -42,7 +41,7 @@ export class CustomReportComponent implements OnInit {
   ]
   mode: string='vertical';
   modeList: any= [{'id':'vertical','name':'VERTICAL MODE'},{'id':'horizontal','name':'HORIZONTAL MODE'}];
-  constructor(private _localStorageService: LocalStorageService,
+  constructor(
     private webService: WebService,
     private toaster: ToastrService,) { }
   nodes:any=[];
@@ -67,11 +66,7 @@ export class CustomReportComponent implements OnInit {
   activeToolBar:any={};
 
   ngOnInit(): void {
-    this.menu_name = this.webService.getMenuNameByUrl() ? this.webService.getMenuNameByUrl() : 'Project Org Chart';
-    this.main_menu_name = this.webService.getMainMenuNameByUrl() ? this.webService.getMainMenuNameByUrl() : 'Advance Report';
 
-    this.renderBreadcrum();
-// this.setNode()
 this.makeSideMenu();
 this.makeToolBar();
 
@@ -376,21 +371,6 @@ this.is_tool_bar=true;
   }
   company_setup:any={}
   GetCompanySetUpData() {
-    this.isProgressing = true;
-    let req = {
-      "company_id": this._localStorageService.getEmpCompanyId() == undefined ? "0" : this._localStorageService.getEmpCompanyId(),
-    }
-    this.company_setup={}
-    this.webService.commonPostMethod("Update_company_meta/ajax_getall_bycompany", req).subscribe(
-      data => {
-        if (data.status)
-        {}
-        else {
-        }
-      }, error => {
-        this.isProgressing = false;
-      }
-    )
   }
 
 is_active:boolean=false;

@@ -5,24 +5,9 @@ import { Routes, RouterModule } from '@angular/router';
 //
 const routes: Routes = [
 {
-  path: 'project-gantt-chart',
-  loadChildren: () => import('./reports/project-gantt-chart/project-gantt-chart.module').then(m => m.ProjectGanttChartModule)
-  // canLoad: [AuthService]
-},
-{
-  path: 'project-gantts',
-  loadChildren: () => import('./reports/project-gantt/project-gantt.module').then(m => m.ProjectGanttModule)
-},
-{
-  path: 'project-org-chart',
-  loadChildren: () => import('./reports/project-org-chart/project-org-chart.module').then(m => m.ProjectOrgChartModule)
-},
-{
-  path: 'custom-report',
+  path: '',
   loadChildren: () => import('./reports/custom-report/custom-report.module').then(m => m.CustomReportModule)
 },
-  // ReportsModule
-  // { path: 'reports', loadChildren: './reports/reports.module#ReportModule' }
 ];
 @NgModule({
   imports: [
