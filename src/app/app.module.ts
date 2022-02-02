@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
-import { NgxMatDrpModule } from 'ngx-mat-daterange-picker';
 import { AppRoutingModule } from './app-routing.module';
 
 
@@ -79,7 +78,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     MatTooltipModule,
     MatProgressSpinnerModule,
     MatToolbarModule,
-    NgxMatDrpModule
   ],
   providers: [WebService],
   bootstrap: [AppComponent],
