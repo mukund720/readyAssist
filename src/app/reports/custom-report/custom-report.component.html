@@ -31,10 +31,7 @@
                 <mat-form-field class="full-width" style="top: -11px;">
                   <mat-label>Select From Table</mat-label>
                   <mat-select [(ngModel)]="activeChildMenu.table" (ngModelChange)="setColumns(activeChildMenu.table);" [disabled]="api_progressing.is_table_api" id="searchTable">
-                    <mat-option>
-                      <ngx-mat-select-search placeholder="Search" [(ngModel)]="activeChildMenu.searchProject">
-                      </ngx-mat-select-search>
-                    </mat-option>
+
                     <mat-option>Clear Filter</mat-option>
                     <mat-option *ngFor="let i of activeChildMenu.tableList|search: activeChildMenu.searchTable"
                     [value]="i.item_id">{{i.item_text}}
@@ -47,11 +44,7 @@
                 <mat-form-field class="full-width" style="top: -11px;">
                   <mat-label>Select Columns</mat-label>
                   <mat-select [(ngModel)]="activeChildMenu.columnList" (ngModelChange)="makeQuery()" multiple="true" [disabled]="api_progressing.is_column_api" id="searchColumn">
-                    <mat-option>
-                      <ngx-mat-select-search placeholder="Search" [(ngModel)]="activeChildMenu.searchColumns">
-                      </ngx-mat-select-search>
-                    </mat-option>
-                    <!-- <mat-option>Clear Filter</mat-option> -->
+
                     <mat-option  *ngFor="let i of activeChildMenu.columnRecordList|search: activeChildMenu.searchColumns"
                     [value]="i.item_id">{{i.item_text}}
                     </mat-option>
@@ -77,11 +70,7 @@
                 <mat-form-field class="full-width" style="top: -11px;">
                   <mat-label>Order By Column</mat-label>
                   <mat-select [(ngModel)]="activeChildMenu.order_by_column" [disabled]="activeChildMenu.order_by==''" multiple="true" (ngModelChange)="makeQuery()" [disabled]="api_progressing.is_column_api" id="orderColumn">
-                    <mat-option>
-                      <ngx-mat-select-search placeholder="Search" [(ngModel)]="activeChildMenu.searchOrderColumns">
-                      </ngx-mat-select-search>
-                    </mat-option>
-                    <!-- <mat-option>Clear Filter</mat-option> -->
+
                     <mat-option  *ngFor="let i of activeChildMenu.columnList|search: activeChildMenu.searchOrderColumns"
                     [value]="i">{{i}}
                     </mat-option>

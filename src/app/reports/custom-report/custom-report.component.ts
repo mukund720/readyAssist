@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { Validators, FormBuilder } from "@angular/forms";
 import { ToastrService } from 'ngx-toastr';
 import { WebService } from 'src/app/shared/services/web.service';
-import html2canvas from 'html2canvas';
 @Component({
   selector: 'app-custom-report',
   templateUrl: './custom-report.component.html',

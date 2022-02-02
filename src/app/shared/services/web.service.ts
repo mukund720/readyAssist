@@ -1,16 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from "@angular/router";
-import { DeviceDetectorService } from 'ngx-device-detector';
 @Injectable()
 export class WebService {
 
   constructor(
     private http: HttpClient,
     private router: Router,
-    private deviceService: DeviceDetectorService
   ) {
-    this.getdeviceDetails();
     this.getDynamicUrl();
   }
 
@@ -34,9 +31,6 @@ export class WebService {
     const body = data;
     let endPoint:any=''
       endPoint = this.baseUrl + url;
-
-    body.device_info = this.getdeviceDetails();
-
     return this.http.post(endPoint, body, { headers });
   }
 
@@ -92,37 +86,7 @@ export class WebService {
     setTimeout(() => { }, delayInMilliseconds);
   }
 
-  getdeviceDetails() {
-    this.deviceInfo = this.deviceService.getDeviceInfo();
-    // const isMobile = this.deviceService.isMobile();
-    // const isTablet = this.deviceService.isTablet();
-    // const isDesktopDevice = this.deviceService.isDesktop();
-    const data: any = {};
-    data.device_type = '';
-    if (this.deviceService.isMobile()) {
-      data.device_type = 'Mobile';
-    }
-    if (this.deviceService.isTablet()) {
-      data.device_type = 'Tablet';
-    }
-    if (this.deviceService.isDesktop()) {
-      data.device_type = 'Desktop';
-    }
-
-    data.is_mobile = this.deviceService.isMobile() ? '1' : '0';
-    data.is_tablet = this.deviceService.isTablet() ? '1' : '0';
-    data.is_desktop = this.deviceService.isDesktop() ? '1' : '0';
-    data.browser = this.deviceInfo.browser ? this.deviceInfo.browser : '';
-    data.os = this.deviceInfo.os ? this.deviceInfo.os : '';
-    data.os_version = this.deviceInfo.os_version
-      ? this.deviceInfo.os_version
-      : '';
-    data.user_agent = this.deviceInfo.userAgent
-      ? this.deviceInfo.userAgent
-      : '';
-    data.ip_address = '';
-    return data ? data : {};
-  }
+ 
   getDomainName(hostName)
 {
     return hostName.substring(hostName.lastIndexOf(".", hostName.lastIndexOf(".") - 1) + 1);

@@ -1,8 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-
 import { AppRoutingModule } from './app-routing.module';
 
 
@@ -71,7 +69,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     MatExpansionModule,
     MatMenuModule,
     MatProgressBarModule,
-    NgxMatSelectSearchModule,
     MatPaginatorModule,
     MatTableModule,
     MatSortModule,
